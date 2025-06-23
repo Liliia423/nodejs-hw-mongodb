@@ -1,14 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const pino = require('pino-http')();
+const contactsRouter = require('./routes/contactsRouter');
 
 function setupServer() {
   const app = express();
 
   app.use(cors());
   app.use(pino);
+  app.use(express.json());
 
-  // Обробка неіснуючих маршрутів
+  app.use('/api/contacts', contactsRouter);
+
   app.use((req, res) => {
     res.status(404).json({ message: 'Not found' });
   });
