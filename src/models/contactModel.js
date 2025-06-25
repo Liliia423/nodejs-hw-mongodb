@@ -1,4 +1,6 @@
-const { Schema, model } = require('mongoose');
+import mongoose from 'mongoose';
+
+const { Schema, model } = mongoose;
 
 const contactSchema = new Schema(
   {
@@ -10,9 +12,7 @@ const contactSchema = new Schema(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-    },
+    email: String,
     isFavourite: {
       type: Boolean,
       default: false,
@@ -37,5 +37,4 @@ const contactSchema = new Schema(
 );
 
 const Contact = model('Contact', contactSchema);
-
-module.exports = Contact;
+export default Contact;

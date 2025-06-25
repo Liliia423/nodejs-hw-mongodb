@@ -1,15 +1,20 @@
-const Contact = require('../models/contact');
+import Contact from '../models/contact.js';
 
-const getAllContacts = async (req, res) => {
+export const getAllContacts = async (req, res) => {
   try {
     const contacts = await Contact.find();
-    res.json(contacts);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully found contacts!',
+      data: contacts,
+    });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
 };
 
-const getContactById = async (req, res) => {
+export const getContactById = async (req, res) => {
   try {
     const { id } = req.params;
     const contact = await Contact.findById(id);
@@ -18,13 +23,12 @@ const getContactById = async (req, res) => {
       return res.status(404).json({ message: 'Contact not found' });
     }
 
-    res.json(contact);
+    res.status(200).json({
+      status: 200,
+      message: `Successfully found contact with id ${id}!`,
+      data: contact,
+    });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
-};
-
-module.exports = {
-  getAllContacts,
-  getContactById,
 };

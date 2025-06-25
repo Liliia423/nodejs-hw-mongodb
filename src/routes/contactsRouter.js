@@ -1,5 +1,5 @@
-const express = require('express');
-const Contact = require('../models/contactModel');
+import express from 'express';
+import Contact from '../models/contactModel.js';
 
 const router = express.Router();
 
@@ -27,4 +27,4 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
