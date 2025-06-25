@@ -1,4 +1,5 @@
-import express from 'express';
+{
+  /*import express from 'express';
 import Contact from '../models/contactModel.js';
 
 const router = express.Router();
@@ -26,5 +27,18 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Invalid ID format' });
   }
 });
+
+export default router;*/
+}
+import express from 'express';
+import {
+  getAllContacts,
+  getContactById,
+} from '../controllers/contactsController.js';
+
+const router = express.Router();
+
+router.get('/', getAllContacts);
+router.get('/:id', getContactById);
 
 export default router;
