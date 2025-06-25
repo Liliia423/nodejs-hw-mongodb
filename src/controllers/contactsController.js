@@ -29,6 +29,9 @@ export const getContactById = async (req, res) => {
       data: contact,
     });
   } catch (err) {
+    if (err.name === 'CastError') {
+      return res.status(404).json({ message: 'Contact not found' });
+    }
     res.status(500).json({ message: 'Server error' });
   }
 };
