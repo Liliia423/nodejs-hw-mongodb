@@ -1,5 +1,9 @@
 import Contact from '../models/contactModel.js';
 import createHttpError from 'http-errors';
+{
+  /*import * as contactsService from '../services/contacts.js';*/
+}
+import { createContact } from '../services/contactsServices.js';
 
 export const getAllContacts = async (req, res) => {
   try {
@@ -36,5 +40,62 @@ export const getContactById = async (req, res, next) => {
     });
   } catch (err) {
     next(createHttpError(404, 'Contact not found'));
+  }
+};
+
+{
+  /*export const createContact = async (req, res, next) => {
+  try {
+    const { name, phoneNumber, email, isFavourite, contactType } = req.body;
+
+    if (!name || !phoneNumber || !contactType) {
+      throw createHttpError(400, 'Missing required fields');
+    }
+
+    const newContact = await contactsService.createContactService({
+      name,
+      phoneNumber,
+      email,
+      isFavourite,
+      contactType,
+    });
+
+    res.status(201).json({
+      status: 201,
+      message: 'Successfully created a contact!',
+      data: newContact,
+    });
+  } catch (err) {
+    next(err);
+  }
+};*/
+}
+
+export const addContact = async (req, res, next) => {
+  try {
+    const { name, phoneNumber, contactType, email, isFavourite } = req.body;
+
+    if (!name || !phoneNumber || !contactType) {
+      throw createHttpError(
+        400,
+        'Missing required fields: name, phoneNumber, or contactType'
+      );
+    }
+
+    const newContact = await createContact({
+      name,
+      phoneNumber,
+      contactType,
+      email,
+      isFavourite,
+    });
+
+    res.status(201).json({
+      status: 201,
+      message: 'Successfully created a contact!',
+      data: newContact,
+    });
+  } catch (err) {
+    next(err);
   }
 };
