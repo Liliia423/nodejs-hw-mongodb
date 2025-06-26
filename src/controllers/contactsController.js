@@ -1,8 +1,14 @@
 import Contact from '../models/contactModel.js';
+import createHttpError from 'http-errors';
 
 export const getAllContacts = async (req, res) => {
   try {
     const contacts = await Contact.find();
+
+    //перевірка статусу 500
+    {
+      /*const contacts = await Contact.fnd();*/
+    }
 
     res.json({
       status: 200,
@@ -10,17 +16,17 @@ export const getAllContacts = async (req, res) => {
       data: contacts,
     });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    next(createHttpError(500, err.message));
   }
 };
 
-export const getContactById = async (req, res) => {
+export const getContactById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const contact = await Contact.findById(id);
 
     if (!contact) {
-      return res.status(404).json({ message: 'Contact not found' });
+      throw createHttpError(404, 'Contact not found');
     }
 
     res.json({
@@ -29,9 +35,6 @@ export const getContactById = async (req, res) => {
       data: contact,
     });
   } catch (err) {
-    if (err.name === 'CastError') {
-      return res.status(404).json({ message: 'Contact not found' });
-    }
-    res.status(500).json({ message: 'Server error' });
+    next(createHttpError(404, 'Contact not found'));
   }
 };
