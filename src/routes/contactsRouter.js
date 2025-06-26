@@ -35,10 +35,11 @@ import {
   getAllContacts,
   getContactById,
 } from '../controllers/contactsController.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const router = express.Router();
 
-router.get('/', getAllContacts);
-router.get('/:id', getContactById);
+router.get('/', ctrlWrapper(getAllContacts));
+router.get('/:id', ctrlWrapper(getContactById));
 
 export default router;
