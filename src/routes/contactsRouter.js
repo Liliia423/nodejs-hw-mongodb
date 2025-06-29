@@ -17,22 +17,10 @@ const router = express.Router();
 
 router.get('/', getAllContacts);
 
-// отримання контакта за id із валідацією
-{
-  /*router.get('/:id', ctrlWrapper(getContactById));*/
-}
 router.get('/:contactId', isValidId, getContactById);
 
-// створення нового контакту із валідацією
-{
-  /*router.post('/', ctrlWrapper(addContact));*/
-}
 router.post('/', validateBody(createContactSchema), addContact);
 
-// оновлення контакту із валідацією
-{
-  /*router.patch('/:contactId', ctrlWrapper(updateContact));*/
-}
 router.patch(
   '/:contactId',
   isValidId,
@@ -40,10 +28,6 @@ router.patch(
   updateContact
 );
 
-// видалення контакту із валідацією
-{
-  /*router.delete('/:contactId', ctrlWrapper(deleteContact));*/
-}
 router.delete('/:contactId', isValidId, deleteContact);
 
 export default router;

@@ -6,50 +6,29 @@ import { createContact } from '../services/contactsServices.js';
 import { updateContactById } from '../services/contactsServices.js';
 import { deleteContactById } from '../services/contactsServices.js';
 
-// router.get('/', getAllContacts);
-{
-  /*export const getAllContacts = async (req, res) => {
-  const { page = 1, perPage = 10 } = req.query;
-
-  const limit = parseInt(perPage);
-  const skip = (parseInt(page) - 1) * limit;
-
-  const totalItems = await Contact.countDocuments();
-  const contacts = await Contact.find().skip(skip).limit(limit);
-
-  const totalPages = Math.ceil(totalItems / limit);
-
-  res.status(200).json({
-    status: 200,
-    message: 'Successfully found contacts!',
-    data: {
-      data: contacts,
-      page: parseInt(page),
-      perPage: limit,
-      totalItems,
-      totalPages,
-      hasPreviousPage: parseInt(page) > 1,
-      hasNextPage: parseInt(page) < totalPages,
-    },
-  });
-};*/
-}
 export const getAllContacts = async (req, res) => {
   const {
     page = 1,
     perPage = 10,
     sortBy = 'name',
     sortOrder = 'asc',
+    type,
+    isFavourite,
   } = req.query;
 
   const limit = parseInt(perPage);
   const skip = (parseInt(page) - 1) * limit;
-
   const sortDirection = sortOrder === 'desc' ? -1 : 1;
   const sortOptions = { [sortBy]: sortDirection };
 
-  const totalItems = await Contact.countDocuments();
-  const contacts = await Contact.find()
+  const filter = {};
+  if (type) filter.contactType = type;
+  if (isFavourite !== undefined) {
+    filter.isFavourite = isFavourite === 'true';
+  }
+
+  const totalItems = await Contact.countDocuments(filter);
+  const contacts = await Contact.find(filter)
     .sort(sortOptions)
     .skip(skip)
     .limit(limit);
@@ -71,7 +50,6 @@ export const getAllContacts = async (req, res) => {
   });
 };
 
-//router.get('/:contactId', isValidId, getContactById);
 export const getContactById = async (req, res) => {
   const { contactId } = req.params;
   const contact = await Contact.findById(contactId);
@@ -87,7 +65,6 @@ export const getContactById = async (req, res) => {
   });
 };
 
-//router.post('/', validateBody(createContactSchema), addContact);
 export const addContact = async (req, res) => {
   const { name, phoneNumber, contactType, email, isFavourite } = req.body;
 
@@ -113,7 +90,6 @@ export const addContact = async (req, res) => {
   });
 };
 
-//router.patch('/:contactId', isValidId, validateBody(updateContactSchema), updateContact);
 export const updateContact = async (req, res) => {
   const { contactId } = req.params;
   const body = req.body;
@@ -131,7 +107,6 @@ export const updateContact = async (req, res) => {
   });
 };
 
-//router.delete('/:contactId', isValidId, deleteContact);
 export const deleteContact = async (req, res) => {
   const { contactId } = req.params;
 
