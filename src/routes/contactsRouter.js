@@ -6,7 +6,6 @@ import {
   updateContact,
   deleteContact,
 } from '../controllers/contactsController.js';
-import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import {
   createContactSchema,
@@ -16,7 +15,7 @@ import { isValidId } from '../middlewares/isValidId.js';
 
 const router = express.Router();
 
-router.get('/', ctrlWrapper(getAllContacts));
+router.get('/', getAllContacts);
 
 // отримання контакта за id із валідацією
 {
