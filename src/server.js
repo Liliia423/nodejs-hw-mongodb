@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
 import contactsRouter from './routes/contactsRouter.js';
-import authRouter from './routes/auth.js';
+import authRouter from './routes/authRouter.js';
 
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
