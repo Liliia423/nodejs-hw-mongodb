@@ -30,6 +30,11 @@ const contactSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
   {
     versionKey: false,

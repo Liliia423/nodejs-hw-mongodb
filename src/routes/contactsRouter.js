@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   getAllContacts,
-  getContactById,
+  getContactByIdController,
   addContact,
   updateContact,
   deleteContact,
@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.get('/', getAllContacts);
 
-router.get('/:contactId', isValidId, getContactById);
+router.get('/:contactId', isValidId, getContactByIdController);
 
 router.post('/', validateBody(createContactSchema), addContact);
 
