@@ -66,3 +66,36 @@ export async function login({ email, password }) {
     },
   };
 }
+
+export const logoutUser = async (userId) => {
+  return await Session.findOneAndDelete({ userId });
+};
+
+export async function findSession(sessionId) {
+  return await Session.findById(sessionId);
+}
+
+export const refreshSession = async (refreshToken) => {
+  try {
+    const payload = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
+
+    const session = await Session.findOne({ token: refreshToken });
+
+    if (!session) {
+      return null;
+    }
+
+    const user = await User.findById(payload.id);
+    if (!user) {
+      return null;
+    }
+
+    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+
+    return { accessToken };
+  } catch (error) {
+    return null;
+  }
+};
