@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+{
+  /*import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
 
@@ -42,4 +43,5 @@ const contactSchema = new Schema(
 );
 
 const Contact = model('Contact', contactSchema);
-export default Contact;
+export default Contact;*/
+}

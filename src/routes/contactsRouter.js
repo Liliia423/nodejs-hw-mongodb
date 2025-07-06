@@ -1,4 +1,5 @@
-import express from 'express';
+{
+  /*import express from 'express';
 import {
   getAllContacts,
   getContactByIdController,
@@ -30,4 +31,5 @@ router.patch(
 
 router.delete('/:contactId', isValidId, deleteContact);
 
-export default router;
+export default router;*/
+}

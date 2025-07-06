@@ -1,4 +1,5 @@
-import Contact from '../models/contactModel.js';
+{
+  /*import Contact from '../models/contactModel.js';
 import createHttpError from 'http-errors';
 import mongoose from 'mongoose';
 
@@ -133,4 +134,5 @@ export const deleteContact = async (req, res) => {
   }
 
   res.status(204).send();
-};
+};*/
+}

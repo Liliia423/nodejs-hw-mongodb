@@ -1,4 +1,5 @@
-import jwt from 'jsonwebtoken';
+{
+  /*import jwt from 'jsonwebtoken';
 import createHttpError from 'http-errors';
 import { findSession } from '../services/authServices.js';
 
@@ -27,4 +28,5 @@ export const isAuth = async (req, res, next) => {
   } catch (error) {
     next(createHttpError(401, 'Not authorized'));
   }
-};
+};*/
+}

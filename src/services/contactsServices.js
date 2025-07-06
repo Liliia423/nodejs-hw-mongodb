@@ -1,4 +1,5 @@
-import Contact from '../models/contactModel.js';
+{
+  /*import Contact from '../models/contactModel.js';
 
 export const getContactById = async (contactId, userId) => {
   return await Contact.findOne({ _id: contactId, userId });
@@ -16,4 +17,5 @@ export const updateContactById = async (contactId, userId, body) => {
 
 export const deleteContactById = async (contactId, userId) => {
   return await Contact.findOneAndDelete({ _id: contactId, userId });
-};
+};*/
+}
