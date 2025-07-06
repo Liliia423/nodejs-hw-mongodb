@@ -209,3 +209,13 @@ export const refreshSession = async (refreshToken) => {
 
   return newAccessToken;
 };
+
+export const logoutUser = async (req) => {
+  const { refreshToken } = req.cookies;
+
+  if (!refreshToken) {
+    throw createHttpError(401, 'No refresh token');
+  }
+
+  await Session.findOneAndDelete({ refreshToken });
+};

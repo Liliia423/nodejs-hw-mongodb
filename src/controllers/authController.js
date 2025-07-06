@@ -129,6 +129,7 @@ export const refresh = async (req, res) => {
 
 import { registerUser, loginUser } from '../services/authServices.js';
 import { refreshSession } from '../services/authServices.js';
+import { logoutUser } from '../services/authServices.js';
 
 export const register = async (req, res, next) => {
   try {
@@ -198,6 +199,16 @@ export const refresh = async (req, res, next) => {
       message: 'Successfully refreshed a session!',
       data: { accessToken },
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logout = async (req, res, next) => {
+  try {
+    await logoutUser(req);
+    res.clearCookie('refreshToken');
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }
