@@ -4,6 +4,9 @@ import createHttpError from 'http-errors';
 import User from '../models/user.js';
 import Session from '../models/session.js';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 const ACCESS_TOKEN_EXPIRES_IN = '15m';
 const REFRESH_TOKEN_EXPIRES_IN = '30d';
 

@@ -30,7 +30,7 @@ const contactSchema = new Schema(
   },
   {
     versionKey: false,
-    timestamps: true, // Mongoose сам додасть createdAt і updatedAt
+    timestamps: true,
   }
 );
 
