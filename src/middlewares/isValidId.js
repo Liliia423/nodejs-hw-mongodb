@@ -1,5 +1,4 @@
-{
-  /*import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import createHttpError from 'http-errors';
 
 export const isValidId = (req, res, next) => {
@@ -8,5 +7,4 @@ export const isValidId = (req, res, next) => {
     return next(createHttpError(400, 'Invalid contact ID'));
   }
   next();
-};*/
-}
+};

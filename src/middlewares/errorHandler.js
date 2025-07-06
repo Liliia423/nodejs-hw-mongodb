@@ -1,5 +1,4 @@
-{
-  /*export function errorHandler(err, req, res, next) {
+export function errorHandler(err, req, res, next) {
   const status = err.status || 500;
 
   res.status(status).json({
@@ -7,5 +6,4 @@
     message: 'Something went wrong',
     data: err.message,
   });
-}*/
 }

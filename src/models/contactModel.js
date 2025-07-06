@@ -1,5 +1,4 @@
-{
-  /*import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
 
@@ -23,14 +22,6 @@ const contactSchema = new Schema(
       enum: ['personal', 'work', 'home'],
       default: 'personal',
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -39,9 +30,9 @@ const contactSchema = new Schema(
   },
   {
     versionKey: false,
+    timestamps: true, // Mongoose сам додасть createdAt і updatedAt
   }
 );
 
 const Contact = model('Contact', contactSchema);
-export default Contact;*/
-}
+export default Contact;

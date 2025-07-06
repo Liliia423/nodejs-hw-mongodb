@@ -1,5 +1,4 @@
-{
-  /*import createHttpError from 'http-errors';
+import createHttpError from 'http-errors';
 
 export const validateBody = (schema) => {
   return (req, res, next) => {
@@ -10,5 +9,4 @@ export const validateBody = (schema) => {
       next();
     }
   };
-};*/
-}
+};

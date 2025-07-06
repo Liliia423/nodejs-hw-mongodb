@@ -1,5 +1,5 @@
-{
-  /*import express from 'express';
+import express from 'express';
+import authenticate from '../middlewares/authenticate.js';
 import {
   getAllContacts,
   getContactByIdController,
@@ -15,6 +15,7 @@ import {
 import { isValidId } from '../middlewares/isValidId.js';
 
 const router = express.Router();
+router.use(authenticate);
 
 router.get('/', getAllContacts);
 
@@ -31,5 +32,4 @@ router.patch(
 
 router.delete('/:contactId', isValidId, deleteContact);
 
-export default router;*/
-}
+export default router;

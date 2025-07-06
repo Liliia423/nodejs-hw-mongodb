@@ -1,5 +1,4 @@
-{
-  /*import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import fs from 'fs/promises';
 import path from 'path';
 import Contact from '../models/contactModel.js';
@@ -24,5 +23,4 @@ export async function initMongoConnection() {
     console.error('Mongo connection error:', err.message);
     process.exit(1);
   }
-}*/
 }
