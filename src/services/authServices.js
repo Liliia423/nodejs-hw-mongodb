@@ -10,7 +10,7 @@ dotenv.config();
 const ACCESS_TOKEN_EXPIRES_IN = '15m';
 const REFRESH_TOKEN_EXPIRES_IN = '30d';
 
-const SALT_ROUNDS = 10;
+const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS) || 10;
 
 export const registerUser = async ({ name, email, password }) => {
   const existingUser = await User.findOne({ email });
