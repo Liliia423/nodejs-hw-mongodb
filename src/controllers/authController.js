@@ -1,6 +1,18 @@
 import { registerUser, loginUser } from '../services/authServices.js';
 import { refreshSession } from '../services/authServices.js';
 import { logoutUser } from '../services/authServices.js';
+import { Resend } from 'resend';
+
+import bcrypt from 'bcryptjs';
+
+import jwt from 'jsonwebtoken';
+import createError from 'http-errors';
+
+import User from '../models/user.js';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const { JWT_SECRET } = process.env;
 
 export const register = async (req, res, next) => {
   try {
@@ -81,6 +93,72 @@ export const logout = async (req, res, next) => {
     res.clearCookie('refreshToken');
     res.sendStatus(204);
   } catch (error) {
+    next(error);
+  }
+};
+
+export const sendEmailController = async (req, res, next) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) throw createError(404, 'User not found!');
+
+    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '5m' });
+    const resetLink = `http://localhost:3000/reset-password?token=${token}`;
+
+    await resend.emails.send({
+      from: 'Your App <onboarding@resend.dev>',
+      to: email,
+      subject: 'Reset your password',
+      html: `
+        <p>Click the link to reset your password:</p>
+        <p><a href="${resetLink}">${resetLink}</a></p>
+      `,
+    });
+
+    res.status(200).json({
+      status: 200,
+      message: 'Reset password email has been successfully sent.',
+      data: {},
+    });
+  } catch (error) {
+    console.error(error);
+    next(createError(500, 'Failed to send the email, please try again later.'));
+  }
+};
+
+export const resetPasswordController = async (req, res, next) => {
+  try {
+    const { token, password } = req.body;
+
+    if (!token || !password) {
+      throw createError(400, 'Token and password are required');
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, JWT_SECRET);
+    } catch (err) {
+      throw createError(401, 'Token is expired or invalid.');
+    }
+
+    const user = await User.findOne({ email: decoded.email });
+    if (!user) {
+      throw createError(404, 'User not found');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({
+      status: 200,
+      message: 'Password has been successfully reset.',
+      data: {},
+    });
+  } catch (error) {
+    console.error('resetPasswordController error:', error.message);
     next(error);
   }
 };
