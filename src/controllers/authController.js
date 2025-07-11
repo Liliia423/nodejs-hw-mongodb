@@ -111,7 +111,7 @@ export const sendEmailController = async (req, res, next) => {
     if (!user) throw createError(404, 'User not found!');
 
     const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '5m' });
-    const resetLink = `http://localhost:3000/reset-password?token=${token}`;
+    const resetLink = `${process.env.APP_DOMAIN}/reset-password?token=${token}`;
 
     {
       /*await resend.emails.send({
