@@ -2,6 +2,8 @@ import { registerUser, loginUser } from '../services/authServices.js';
 import { refreshSession } from '../services/authServices.js';
 import { logoutUser } from '../services/authServices.js';
 import { Resend } from 'resend';
+import { sendWithResend } from '../senders/sendWithResend.js';
+import { sendWithUkrNet } from '../senders/sendWithUkrNet.js';
 
 import bcrypt from 'bcryptjs';
 
@@ -9,6 +11,10 @@ import jwt from 'jsonwebtoken';
 import createError from 'http-errors';
 
 import User from '../models/user.js';
+
+const useUkrNet = process.env.USE_UKRNET === 'true';
+const sender =
+  process.env.USE_UKRNET === 'true' ? sendWithUkrNet : sendWithResend;
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -107,8 +113,19 @@ export const sendEmailController = async (req, res, next) => {
     const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '5m' });
     const resetLink = `http://localhost:3000/reset-password?token=${token}`;
 
-    await resend.emails.send({
+    {
+      /*await resend.emails.send({
       from: 'Your App <onboarding@resend.dev>',
+      to: email,
+      subject: 'Reset your password',
+      html: `
+        <p>Click the link to reset your password:</p>
+        <p><a href="${resetLink}">${resetLink}</a></p>
+      `,
+    });*/
+    }
+
+    await sender({
       to: email,
       subject: 'Reset your password',
       html: `
