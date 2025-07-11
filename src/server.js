@@ -27,9 +27,9 @@ const MONGO_URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGO
 
 mongoose
   .connect(MONGO_URI)
-  .then(() => console.log('✅ Connected to MongoDB Atlas'))
+  .then(() => console.log('Connected to MongoDB Atlas'))
   .catch((err) => {
-    console.error('❌ MongoDB connection error:', err);
+    console.error('MongoDB connection error:', err);
     process.exit(1);
   });
 

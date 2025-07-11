@@ -3,6 +3,7 @@ import validateBody from '../middlewares/validateBody.js';
 
 import { sendEmailSchema } from '../schemas/sendEmailSchema.js';
 import { resetPasswordSchema } from '../schemas/resetPasswordSchema.js';
+import { resetPwdSchema } from '../schemas/resetPwdSchema.js';
 
 import {
   register,
@@ -11,6 +12,7 @@ import {
   logout,
   sendEmailController,
   resetPasswordController,
+  resetPwdController,
 } from '../controllers/authController.js';
 
 const router = express.Router();
@@ -29,5 +31,7 @@ router.post(
   validateBody(resetPasswordSchema),
   resetPasswordController
 );
+
+router.post('/reset-pwd', validateBody(resetPwdSchema), resetPwdController);
 
 export default router;
