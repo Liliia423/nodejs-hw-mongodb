@@ -76,6 +76,7 @@ export const getContactByIdController = async (req, res) => {
 
 export const addContact = async (req, res) => {
   const { name, phoneNumber, contactType, email, isFavourite } = req.body;
+  const photo = req.file ? req.file.path : '';
 
   if (!name || !phoneNumber || !contactType) {
     throw createHttpError(
@@ -90,6 +91,7 @@ export const addContact = async (req, res) => {
     contactType,
     email,
     isFavourite,
+    photo,
     userId: req.user._id,
   });
 

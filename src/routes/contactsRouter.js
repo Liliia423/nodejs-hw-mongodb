@@ -1,5 +1,8 @@
 import express from 'express';
+import upload from '../middlewares/upload.js';
 import authenticate from '../middlewares/authenticate.js';
+import * as ctrl from '../controllers/contactsController.js';
+
 import {
   getAllContacts,
   getContactByIdController,
@@ -32,5 +35,21 @@ router.patch(
 );
 
 router.delete('/:contactId', isValidId, deleteContact);
+
+router.post(
+  '/',
+  authenticate,
+  upload.single('photo'),
+  validateBody(createContactSchema),
+  ctrl.addContact
+);
+router.post('/contacts', upload.single('photo'), addContact);
+
+router.patch(
+  '/contacts/:contactId',
+  authenticate,
+  upload.single('photo'),
+  updateContact
+);
 
 export default router;
