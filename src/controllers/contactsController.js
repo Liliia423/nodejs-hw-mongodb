@@ -104,10 +104,19 @@ export const addContact = async (req, res) => {
 
 export const updateContact = async (req, res) => {
   const { contactId } = req.params;
-  const body = req.body;
   const userId = req.user._id;
 
-  const updatedContact = await updateContactById(contactId, userId, body);
+  const fieldsToUpdate = { ...req.body };
+
+  if (req.file && req.file.path) {
+    fieldsToUpdate.photo = req.file.path;
+  }
+
+  const updatedContact = await updateContactById(
+    contactId,
+    userId,
+    fieldsToUpdate
+  );
 
   if (!updatedContact) {
     throw createHttpError(404, 'Contact not found');

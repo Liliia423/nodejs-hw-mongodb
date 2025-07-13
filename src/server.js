@@ -1,10 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
+
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import contactsRouter from './routes/contactsRouter.js';
 
-dotenv.config();
+import contactsRouter from './routes/contactsRouter.js';
 
 const app = express();
 
@@ -17,9 +19,9 @@ app.use('/auth', authRouter);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
-  res.status(status).json({
+  res.status(err?.status || 500).json({
     status: 'error',
-    message: err.message || 'Internal Server Error',
+    message: err?.message || 'Internal Server Error',
   });
 });
 

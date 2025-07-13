@@ -1,7 +1,8 @@
 import express from 'express';
 import upload from '../middlewares/upload.js';
 import authenticate from '../middlewares/authenticate.js';
-import * as ctrl from '../controllers/contactsController.js';
+import validateBody from '../middlewares/validateBody.js';
+import { isValidId } from '../middlewares/isValidId.js';
 
 import {
   getAllContacts,
@@ -10,46 +11,41 @@ import {
   updateContact,
   deleteContact,
 } from '../controllers/contactsController.js';
-import validateBody from '../middlewares/validateBody.js';
 
 import {
   createContactSchema,
   updateContactSchema,
 } from '../schemas/contactSchemas.js';
-import { isValidId } from '../middlewares/isValidId.js';
 
 const router = express.Router();
+
+// Захист для всіх роутів
 router.use(authenticate);
 
+// Отримати всі контакти
 router.get('/', getAllContacts);
 
+// Отримати контакт за ID
 router.get('/:contactId', isValidId, getContactByIdController);
 
-router.post('/', validateBody(createContactSchema), addContact);
+// Додати новий контакт з фото
+router.post(
+  '/',
+  upload.single('photo'),
+  validateBody(createContactSchema),
+  addContact
+);
 
+// Оновити контакт за ID (з фото)
 router.patch(
   '/:contactId',
   isValidId,
+  upload.single('photo'),
   validateBody(updateContactSchema),
   updateContact
 );
 
+// Видалити контакт
 router.delete('/:contactId', isValidId, deleteContact);
-
-router.post(
-  '/',
-  authenticate,
-  upload.single('photo'),
-  validateBody(createContactSchema),
-  ctrl.addContact
-);
-router.post('/contacts', upload.single('photo'), addContact);
-
-router.patch(
-  '/contacts/:contactId',
-  authenticate,
-  upload.single('photo'),
-  updateContact
-);
 
 export default router;
