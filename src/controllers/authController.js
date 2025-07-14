@@ -1,10 +1,7 @@
 import { registerUser, loginUser } from '../services/authServices.js';
 import { refreshSession } from '../services/authServices.js';
 import { logoutUser } from '../services/authServices.js';
-{
-  /*import { Resend } from 'resend';
-import { sendWithResend } from '../senders/sendWithResend.js';*/
-}
+
 import { sendWithUkrNet } from '../senders/sendWithUkrNet.js';
 
 import bcrypt from 'bcryptjs';
@@ -13,13 +10,6 @@ import jwt from 'jsonwebtoken';
 import createError from 'http-errors';
 
 import User from '../models/user.js';
-
-{
-  /*const useUkrNet = process.env.USE_UKRNET === 'true';
-const sender = (process.env.USE_UKRNET = sendWithUkrNet);
-
-const resend = new Resend(process.env.RESEND_API_KEY);*/
-}
 
 const sender = sendWithUkrNet;
 
