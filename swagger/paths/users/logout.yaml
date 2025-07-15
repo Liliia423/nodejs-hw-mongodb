@@ -1,0 +1,13 @@
+post:
+  tags:
+    - auth
+  summary: Вихід користувача
+  description: Виходить з системи та анулює токен
+  operationId: logoutUser
+  responses:
+    '204':
+      description: Успішний вихід (без тіла відповіді)
+    '401':
+      description: Неавторизований запит
+  security:
+    - bearerAuth: []

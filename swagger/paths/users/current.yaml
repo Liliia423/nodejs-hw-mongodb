@@ -1,0 +1,17 @@
+get:
+  tags:
+    - auth
+  summary: Отримати поточного користувача
+  description: Повертає email і subscription поточного авторизованого користувача
+  operationId: getCurrentUser
+  responses:
+    '200':
+      description: Дані користувача
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/UserInfo.yaml'
+    '401':
+      description: Неавторизований запит
+  security:
+    - bearerAuth: []

@@ -8,7 +8,29 @@ import mongoose from 'mongoose';
 
 import contactsRouter from './routes/contactsRouter.js';
 
+import swaggerUi from 'swagger-ui-express';
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import fs from 'fs';
+
 const app = express();
+const PORT = process.env.PORT || 3000;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+{
+  /*const swaggerDocument = YAML.load(
+  path.join(__dirname, '..', 'docs', 'swagger.json')
+);*/
+}
+
+const swaggerPath = path.join(__dirname, 'docs', 'swagger.json');
+const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, 'utf8'));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -34,5 +56,9 @@ mongoose
     console.error('MongoDB connection error:', err);
     process.exit(1);
   });
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port: ${PORT}`);
+});
 
 export default app;
