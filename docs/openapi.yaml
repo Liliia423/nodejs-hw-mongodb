@@ -18,13 +18,13 @@ servers:
   - url: http://localhost:3000
   - url: https://https://nodejs-hw-mongodb-lilya.onrender.com
 paths:
-  /api/contacts:
+  /contacts:
     get:
       $ref: ../swagger/paths/contacts/get.yaml
     post:
       $ref: ../swagger/paths/contacts/post.yaml
 
-  /api/contacts/{contactId}:
+  /contacts/{contactId}:
     get:
       $ref: ../swagger/paths/contacts/{contactId}/get.yaml
     patch:
@@ -32,19 +32,19 @@ paths:
     delete:
       $ref: ../swagger/paths/contacts/{contactId}/delete.yaml
 
-  /api/users/register:
+  /users/register:
     post:
       $ref: ../swagger/paths/users/register.yaml
 
-  /api/users/login:
+  /users/login:
     post:
       $ref: ../swagger/paths/users/login.yaml
 
-  /api/users/logout:
+  /users/logout:
     post:
       $ref: ../swagger/paths/users/logout.yaml
 
-  /api/users/current:
+  /users/current:
     get:
       $ref: ../swagger/paths/users/current.yaml
 

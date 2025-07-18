@@ -32,7 +32,7 @@
     }
   ],
   "paths": {
-    "/api/contacts": {
+    "/contacts": {
       "get": {
         "get": {
           "tags": [
@@ -141,9 +141,19 @@
         }
       }
     },
-    "/api/contacts/{contactId}": {
+    "/contacts/{contactId}": {
       "get": {
         "get": {
+          "200": {
+            "description": "Успішна відповідь",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../../components/schemas/Contact.yaml"
+                }
+              }
+            }
+          },
           "tags": [
             "contacts"
           ],
@@ -165,26 +175,7 @@
               }
             }
           ],
-          "responses": {
-            "200": {
-              "description": "Успішна відповідь",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "_id": "string",
-                    "name": "string",
-                    "email": "string",
-                    "phone": "string",
-                    "favorite": true,
-                    "owner": "string"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Контакт не знайдено"
-            }
-          }
+          "responses": null
         }
       },
       "patch": {
@@ -282,7 +273,7 @@
         }
       }
     },
-    "/api/users/register": {
+    "/users/register": {
       "post": {
         "post": {
           "tags": [
@@ -313,7 +304,7 @@
         }
       }
     },
-    "/api/users/login": {
+    "/users/login": {
       "post": {
         "post": {
           "tags": [
@@ -359,7 +350,7 @@
         }
       }
     },
-    "/api/users/logout": {
+    "/users/logout": {
       "post": {
         "post": {
           "tags": [
@@ -384,7 +375,7 @@
         }
       }
     },
-    "/api/users/current": {
+    "/users/current": {
       "get": {
         "get": {
           "tags": [

@@ -13,16 +13,9 @@ get:
       schema:
         type: string
   responses:
-    '200':
-      description: Успішна відповідь
-      content:
-        application/json:
-          example:
-            _id: 'string'
-            name: 'string'
-            email: 'string'
-            phone: 'string'
-            favorite: true
-            owner: 'string'
-    '404':
-      description: Контакт не знайдено
+  '200':
+    description: Успішна відповідь
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/Contact.yaml'

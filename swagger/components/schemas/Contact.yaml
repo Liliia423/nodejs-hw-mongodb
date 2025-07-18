@@ -1,4 +1,11 @@
 type: object
+required:
+  - _id
+  - name
+  - email
+  - phone
+  - favorite
+  - owner
 properties:
   _id:
     type: string
@@ -12,8 +19,3 @@ properties:
     type: boolean
   owner:
     type: string
-required:
-  - _id
-  - name
-  - email
-  - phone

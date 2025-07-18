@@ -2,39 +2,34 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
-
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 import contactsRouter from './routes/contactsRouter.js';
-
-import swaggerUi from 'swagger-ui-express';
-
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import fs from 'fs';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Отримання поточної директорії
 const __filename = fileURLToPath(import.meta.url);
-
 const __dirname = dirname(__filename);
-console.log('__dirname =', __dirname);
 
-{
-  /*const swaggerDocument = YAML.load(
-  path.join(__dirname, '..', 'docs', 'swagger.json')
-);*/
-}
-
+// Шлях до swagger.json
 const swaggerPath = path.join(__dirname, 'docs', 'swagger.json');
-console.log('swaggerPath =', swaggerPath);
-
 const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, 'utf8'));
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Swagger UI
+app.use('/api-docs', ...swaggerDocs(swaggerDocument));
+
+// Статичні swagger-файли (якщо треба напряму відкривати JSON)
+app.use('/docs', express.static(path.join(__dirname, 'docs')));
+
+// Маршрути
+app.use('/api/contacts', contactsRouter);
 
 app.use(express.json());
 app.use(cookieParser());
