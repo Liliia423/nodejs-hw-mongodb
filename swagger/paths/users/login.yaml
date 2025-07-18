@@ -9,7 +9,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/LoginUser.yaml'
+          $ref: '../../components/schemas/LoginUser.yaml'
   responses:
     '200':
       description: Успішна авторизація
@@ -21,7 +21,7 @@ post:
               token:
                 type: string
               user:
-                $ref: '../../../components/schemas/UserInfo.yaml'
+                $ref: '../../components/schemas/UserInfo.yaml'
     '401':
       description: Невірні дані для входу
   security: []

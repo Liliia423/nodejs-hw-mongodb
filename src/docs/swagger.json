@@ -34,68 +34,66 @@
   "paths": {
     "/contacts": {
       "get": {
-        "get": {
-          "tags": [
-            "contacts"
-          ],
-          "summary": "Отримати всі контакти користувача",
-          "description": "Повертає список усіх контактів, які належать користувачу",
-          "operationId": "getAllContacts",
-          "parameters": [
-            {
-              "name": "page",
-              "in": "query",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "minimum": 1
-              },
-              "description": "Номер сторінки (пагінація)"
+        "tags": [
+          "contacts"
+        ],
+        "summary": "Отримати всі контакти користувача",
+        "description": "Повертає список усіх контактів, які належать користувачу",
+        "operationId": "getAllContacts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
             },
-            {
-              "name": "limit",
-              "in": "query",
-              "required": false,
-              "schema": {
-                "type": "integer",
-                "minimum": 1
-              },
-              "description": "Кількість елементів на сторінці"
+            "description": "Номер сторінки (пагінація)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
             },
-            {
-              "name": "favorite",
-              "in": "query",
-              "required": false,
-              "schema": {
-                "type": "boolean"
-              },
-              "description": "Фільтр за улюбленими"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Список контактів",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "../../../components/schemas/Contact.yaml"
-                    }
+            "description": "Кількість елементів на сторінці"
+          },
+          {
+            "name": "favorite",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Фільтр за улюбленими"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список контактів",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contact"
                   }
                 }
               }
-            },
-            "401": {
-              "description": "Неавторизований запит"
             }
           },
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ]
-        }
+          "401": {
+            "description": "Неавторизований запит"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "post": {
@@ -121,7 +119,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "../../../components/schemas/Contact.yaml"
+                    "$ref": "../../components/schemas/Contact.yaml"
                   }
                 }
               }
@@ -143,40 +141,38 @@
     },
     "/contacts/{contactId}": {
       "get": {
-        "get": {
-          "200": {
-            "description": "Успішна відповідь",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../../../components/schemas/Contact.yaml"
-                }
-              }
-            }
-          },
-          "tags": [
-            "contacts"
-          ],
-          "summary": "Отримати контакт за ID",
-          "operationId": "getContactById",
-          "description": "Отримання одного контакту за його унікальним ідентифікатором",
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "parameters": [
-            {
-              "name": "contactId",
-              "in": "path",
-              "required": true,
+        "200": {
+          "description": "Успішна відповідь",
+          "content": {
+            "application/json": {
               "schema": {
-                "type": "string"
+                "$ref": "../../../components/schemas/Contact.yaml"
               }
             }
-          ],
-          "responses": null
-        }
+          }
+        },
+        "tags": [
+          "contacts"
+        ],
+        "summary": "Отримати контакт за ID",
+        "operationId": "getContactById",
+        "description": "Отримання одного контакту за його унікальним ідентифікатором",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": null
       },
       "patch": {
         "patch": {
@@ -287,7 +283,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "../../../components/schemas/RegisterUser.yaml"
+                  "$ref": "../../components/schemas/RegisterUser.yaml"
                 }
               }
             }
@@ -318,7 +314,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "../../../components/schemas/LoginUser.yaml"
+                  "$ref": "../../components/schemas/LoginUser.yaml"
                 }
               }
             }
@@ -335,7 +331,7 @@
                         "type": "string"
                       },
                       "user": {
-                        "$ref": "../../../components/schemas/UserInfo.yaml"
+                        "$ref": "../../components/schemas/UserInfo.yaml"
                       }
                     }
                   }
@@ -377,34 +373,32 @@
     },
     "/users/current": {
       "get": {
-        "get": {
-          "tags": [
-            "auth"
-          ],
-          "summary": "Отримати поточного користувача",
-          "description": "Повертає email і subscription поточного авторизованого користувача",
-          "operationId": "getCurrentUser",
-          "responses": {
-            "200": {
-              "description": "Дані користувача",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "../../../components/schemas/UserInfo.yaml"
-                  }
+        "tags": [
+          "auth"
+        ],
+        "summary": "Отримати поточного користувача",
+        "description": "Повертає email і subscription поточного авторизованого користувача",
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "Дані користувача",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfo"
                 }
               }
-            },
-            "401": {
-              "description": "Неавторизований запит"
             }
           },
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ]
-        }
+          "401": {
+            "description": "Неавторизований запит"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -413,6 +407,54 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Contact": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "phone",
+          "favorite",
+          "owner"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "favorite": {
+            "type": "boolean"
+          },
+          "owner": {
+            "type": "string"
+          }
+        }
+      },
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "subscription": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "subscription"
+        ]
       }
     }
   }

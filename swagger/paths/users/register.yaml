@@ -9,7 +9,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/RegisterUser.yaml'
+          $ref: '../../components/schemas/RegisterUser.yaml'
   responses:
     '201':
       description: Користувача створено

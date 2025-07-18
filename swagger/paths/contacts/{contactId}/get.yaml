@@ -1,21 +1,20 @@
-get:
-  tags:
-    - contacts
-  summary: Отримати контакт за ID
-  operationId: getContactById
-  description: Отримання одного контакту за його унікальним ідентифікатором
-  security:
-    - bearerAuth: []
-  parameters:
-    - name: contactId
-      in: path
-      required: true
+tags:
+  - contacts
+summary: Отримати контакт за ID
+operationId: getContactById
+description: Отримання одного контакту за його унікальним ідентифікатором
+security:
+  - bearerAuth: []
+parameters:
+  - name: contactId
+    in: path
+    required: true
+    schema:
+      type: string
+responses:
+'200':
+  description: Успішна відповідь
+  content:
+    application/json:
       schema:
-        type: string
-  responses:
-  '200':
-    description: Успішна відповідь
-    content:
-      application/json:
-        schema:
-          $ref: '../../../components/schemas/Contact.yaml'
+        $ref: '../../../components/schemas/Contact.yaml'
