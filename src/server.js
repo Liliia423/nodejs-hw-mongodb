@@ -19,7 +19,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
+
 const __dirname = dirname(__filename);
+console.log('__dirname =', __dirname);
 
 {
   /*const swaggerDocument = YAML.load(
@@ -28,6 +30,8 @@ const __dirname = dirname(__filename);
 }
 
 const swaggerPath = path.join(__dirname, 'docs', 'swagger.json');
+console.log('swaggerPath =', swaggerPath);
+
 const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, 'utf8'));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
