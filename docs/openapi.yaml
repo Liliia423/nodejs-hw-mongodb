@@ -16,7 +16,7 @@ tags:
     description: Операції з користувачем
 servers:
   - url: http://localhost:3000
-  - url: https://https://nodejs-hw-mongodb-lilya.onrender.com
+  - url: https:///nodejs-hw-mongodb-lilya.onrender.com
 
 paths:
   /contacts:
