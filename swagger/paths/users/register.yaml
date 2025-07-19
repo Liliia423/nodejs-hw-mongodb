@@ -1,18 +1,17 @@
-post:
-  tags:
-    - auth
-  summary: Реєстрація нового користувача
-  description: Створює нового користувача в системі
-  operationId: registerUser
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          $ref: '../../components/schemas/RegisterUser.yaml'
-  responses:
-    '201':
-      description: Користувача створено
-    '400':
-      description: Помилка валідації або такий email вже існує
-  security: []
+tags:
+  - auth
+summary: Реєстрація нового користувача
+description: Створює нового користувача в системі
+operationId: registerUser
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '../../components/schemas/RegisterUser.yaml'
+responses:
+  '201':
+    description: Користувача створено
+  '400':
+    description: Помилка валідації або такий email вже існує
+security: []

@@ -1,27 +1,26 @@
-post:
-  tags:
-    - auth
-  summary: Логін користувача
-  description: Авторизує користувача і повертає токен доступу
-  operationId: loginUser
-  requestBody:
-    required: true
+tags:
+  - auth
+summary: Логін користувача
+description: Авторизує користувача і повертає токен доступу
+operationId: loginUser
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '../../components/schemas/LoginUser.yaml'
+responses:
+  '200':
+    description: Успішна авторизація
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/LoginUser.yaml'
-  responses:
-    '200':
-      description: Успішна авторизація
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              token:
-                type: string
-              user:
-                $ref: '../../components/schemas/UserInfo.yaml'
-    '401':
-      description: Невірні дані для входу
-  security: []
+          type: object
+          properties:
+            token:
+              type: string
+            user:
+              $ref: '../../components/schemas/UserInfo.yaml'
+  '401':
+    description: Невірні дані для входу
+security: []
