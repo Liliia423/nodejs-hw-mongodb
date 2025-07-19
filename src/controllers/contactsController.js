@@ -55,7 +55,17 @@ export const getAllContacts = async (req, res) => {
 
 export const getContactByIdController = async (req, res) => {
   const { contactId } = req.params;
+  {
+    /*const userId = req.user._id.toString();*/
+  }
   const userId = req.user._id;
+
+  console.log({
+    contactId,
+    userId,
+    contactIdType: typeof contactId,
+    userIdType: typeof userId,
+  });
 
   if (!mongoose.Types.ObjectId.isValid(contactId)) {
     throw createHttpError(400, 'Invalid contact ID format');

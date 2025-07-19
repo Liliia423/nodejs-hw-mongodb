@@ -11,8 +11,12 @@ import fs from 'fs';
 import contactsRouter from './routes/contactsRouter.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
+import usersRouter from './routes/usersRouter.js';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use('/users', usersRouter);
 
 // Отримання поточної директорії
 const __filename = fileURLToPath(import.meta.url);
@@ -29,7 +33,7 @@ app.use('/api-docs', ...swaggerDocs(swaggerDocument));
 app.use('/docs', express.static(path.join(__dirname, 'docs')));
 
 // Маршрути
-app.use('/api/contacts', contactsRouter);
+// app.use('/api/contacts', contactsRouter);
 
 app.use(express.json());
 app.use(cookieParser());

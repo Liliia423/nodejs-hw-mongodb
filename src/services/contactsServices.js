@@ -1,6 +1,13 @@
 import Contact from '../models/contactModel.js';
 
 export const getContactById = async (contactId, userId) => {
+  console.log({
+    contactId,
+    userId,
+    contactIdType: typeof contactId,
+    userIdType: typeof userId,
+  });
+
   return await Contact.findOne({ _id: contactId, userId });
 };
 
