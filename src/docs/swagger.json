@@ -96,47 +96,45 @@
         ]
       },
       "post": {
-        "post": {
-          "tags": [
-            "contacts"
-          ],
-          "summary": "Створити новий контакт",
-          "description": "Додає новий контакт для авторизованого користувача",
-          "operationId": "createContact",
-          "requestBody": {
-            "required": true,
+        "tags": [
+          "contacts"
+        ],
+        "summary": "Створити новий контакт",
+        "description": "Додає новий контакт для авторизованого користувача",
+        "operationId": "createContact",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewContact"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Контакт успішно створено",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "../../../components/schemas/NewContact.yaml"
+                  "$ref": "#/components/schemas/Contact"
                 }
               }
             }
           },
-          "responses": {
-            "201": {
-              "description": "Контакт успішно створено",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "../../components/schemas/Contact.yaml"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Помилка валідації"
-            },
-            "401": {
-              "description": "Неавторизований запит"
-            }
+          "400": {
+            "description": "Помилка валідації"
           },
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ]
-        }
+          "401": {
+            "description": "Неавторизований запит"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/contacts/{contactId}": {
@@ -448,6 +446,28 @@
             "type": "string"
           }
         }
+      },
+      "NewContact": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "favorite": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "phone"
+        ]
       },
       "UserInfo": {
         "type": "object",

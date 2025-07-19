@@ -1,25 +1,24 @@
-post:
-  tags:
-    - contacts
-  summary: Створити новий контакт
-  description: Додає новий контакт для авторизованого користувача
-  operationId: createContact
-  requestBody:
-    required: true
+tags:
+  - contacts
+summary: Створити новий контакт
+description: Додає новий контакт для авторизованого користувача
+operationId: createContact
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '../../components/schemas/NewContact.yaml'
+responses:
+  '201':
+    description: Контакт успішно створено
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/NewContact.yaml'
-  responses:
-    '201':
-      description: Контакт успішно створено
-      content:
-        application/json:
-          schema:
-            $ref: '../../components/schemas/Contact.yaml'
-    '400':
-      description: Помилка валідації
-    '401':
-      description: Неавторизований запит
-  security:
-    - bearerAuth: []
+          $ref: '../../components/schemas/Contact.yaml'
+  '400':
+    description: Помилка валідації
+  '401':
+    description: Неавторизований запит
+security:
+  - bearerAuth: []
