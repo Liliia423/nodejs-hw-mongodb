@@ -13,9 +13,32 @@ properties:
     type: string
   email:
     type: string
-  phone:
+  phoneNumber:
     type: string
-  favorite:
+  contactType:
+    type: string
+  isFavourite:
     type: boolean
-  owner:
+  photo:
     type: string
+  userId:
+    type: string
+  createdAt:
+    type: string
+    format: date-time
+  updatedAt:
+    type: string
+    format: date-time
+
+ErrorResponse:
+  type: object
+  properties:
+    status:
+      type: string
+      example: error
+    code:
+      type: integer
+      example: 401
+    message:
+      type: string
+      example: Not authorized

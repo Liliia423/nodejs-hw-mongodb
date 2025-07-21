@@ -38,7 +38,7 @@
           "contacts"
         ],
         "summary": "Отримати всі контакти користувача",
-        "description": "Повертає список усіх контактів, які належать користувачу",
+        "description": "Повертає список контактів з підтримкою пагінації та фільтрації",
         "operationId": "getAllContacts",
         "parameters": [
           {
@@ -77,16 +77,57 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Contact"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Список контактів"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "contacts": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Contact"
+                          }
+                        },
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "limit": {
+                          "type": "integer",
+                          "example": 10
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 3
+                        }
+                      }
+                    }
                   }
                 }
               }
             }
           },
           "401": {
-            "description": "Неавторизований запит"
+            "description": "Неавторизований запит",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -124,10 +165,44 @@
             }
           },
           "400": {
-            "description": "Помилка валідації"
+            "description": "Помилка валідації даних",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Неавторизований запит"
+            "description": "Неавторизований запит",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Not authorized"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
@@ -426,19 +501,73 @@
           "email": {
             "type": "string"
           },
-          "phone": {
+          "phoneNumber": {
             "type": "string"
           },
-          "favorite": {
+          "contactType": {
+            "type": "string"
+          },
+          "isFavourite": {
             "type": "boolean"
           },
-          "owner": {
+          "photo": {
             "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "ErrorResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "example": "error"
+            },
+            "code": {
+              "type": "integer",
+              "example": 401
+            },
+            "message": {
+              "type": "string",
+              "example": "Not authorized"
+            }
           }
         }
       },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "example": "Not authorized"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
       "NewContact": {
         "type": "object",
+        "required": [
+          "name",
+          "email",
+          "phoneNumber",
+          "contactType"
+        ],
         "properties": {
           "name": {
             "type": "string"
@@ -446,18 +575,16 @@
           "email": {
             "type": "string"
           },
-          "phone": {
+          "phoneNumber": {
             "type": "string"
           },
-          "favorite": {
+          "contactType": {
+            "type": "string"
+          },
+          "isFavourite": {
             "type": "boolean"
           }
-        },
-        "required": [
-          "name",
-          "email",
-          "phone"
-        ]
+        }
       },
       "RegisterUser": {
         "type": "object",

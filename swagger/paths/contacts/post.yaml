@@ -17,8 +17,30 @@ responses:
         schema:
           $ref: '../../components/schemas/Contact.yaml'
   '400':
-    description: Помилка валідації
+    description: Помилка валідації даних
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: 'error'
+            message:
+              type: string
+              example: 'Validation failed'
   '401':
     description: Неавторизований запит
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: 'error'
+            message:
+              type: string
+              example: 'Not authorized'
 security:
   - bearerAuth: []

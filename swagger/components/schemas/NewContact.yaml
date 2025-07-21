@@ -1,14 +1,17 @@
 type: object
+required:
+  - name
+  - email
+  - phoneNumber
+  - contactType
 properties:
   name:
     type: string
   email:
     type: string
-  phone:
+  phoneNumber:
     type: string
-  favorite:
+  contactType:
+    type: string
+  isFavourite:
     type: boolean
-required:
-  - name
-  - email
-  - phone
