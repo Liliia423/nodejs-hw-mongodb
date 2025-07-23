@@ -7,11 +7,20 @@ required:
 properties:
   name:
     type: string
+    example: Ivan Ivanenko
   email:
     type: string
+    format: email
+    example: ivan@example.com
   phoneNumber:
     type: string
+    example: +380991112233
   contactType:
     type: string
+    example: personal
   isFavourite:
     type: boolean
+    example: true
+  photo:
+    type: string
+    format: binary

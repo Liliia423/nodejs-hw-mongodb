@@ -2,8 +2,6 @@ type: object
 properties:
   email:
     type: string
-  subscription:
-    type: string
 required:
   - email
   - subscription

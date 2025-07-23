@@ -11,11 +11,22 @@ parameters:
     schema:
       type: string
 responses:
-  '200':
+  '204':
     description: Контакт успішно видалено
+
   '401':
     description: Неавторизований запит
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/ErrorResponse.yaml'
+
   '404':
     description: Контакт не знайдено
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/ErrorResponse.yaml'
+
 security:
   - bearerAuth: []
