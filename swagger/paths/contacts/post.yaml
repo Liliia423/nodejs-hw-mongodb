@@ -20,9 +20,6 @@ responses:
             status:
               type: string
               example: success
-            code:
-              type: integer
-              example: 201
             message:
               type: string
               example: Contact created
@@ -34,11 +31,17 @@ responses:
       application/json:
         schema:
           $ref: '../../components/schemas/ErrorResponse.yaml'
+        example:
+          status: error
+          message: Validation failed
   '401':
     description: Неавторизований запит
     content:
       application/json:
         schema:
           $ref: '../../components/schemas/ErrorResponse.yaml'
+        example:
+          status: error
+          message: Not authorized
 security:
   - bearerAuth: []

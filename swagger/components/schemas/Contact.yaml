@@ -3,9 +3,9 @@ required:
   - _id
   - name
   - email
-  - phone
-  - favorite
-  - owner
+  - phoneNumber
+  - isFavourite
+  - userId
 properties:
   _id:
     type: string

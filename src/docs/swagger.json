@@ -52,23 +52,57 @@
             "description": "Номер сторінки (пагінація)"
           },
           {
-            "name": "limit",
+            "name": "perPage",
             "in": "query",
             "required": false,
             "schema": {
               "type": "integer",
               "minimum": 1
             },
-            "description": "Кількість елементів на сторінці"
+            "description": "Кількість контактів на сторінці"
           },
           {
-            "name": "favorite",
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "name"
+            },
+            "description": "Поле для сортування (наприклад name, email)"
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "example": "asc"
+            },
+            "description": "Напрям сортування (asc або desc)"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "personal"
+            },
+            "description": "Тип контакту (наприклад personal, work)"
+          },
+          {
+            "name": "isFavourite",
             "in": "query",
             "required": false,
             "schema": {
               "type": "boolean"
             },
-            "description": "Фільтр за улюбленими"
+            "description": "Фільтр за улюбленими контактами"
           }
         ],
         "responses": {
@@ -133,6 +167,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Not authorized"
                 }
               }
             }
@@ -173,10 +211,6 @@
                       "type": "string",
                       "example": "success"
                     },
-                    "code": {
-                      "type": "integer",
-                      "example": 201
-                    },
                     "message": {
                       "type": "string",
                       "example": "Contact created"
@@ -195,6 +229,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Validation failed"
                 }
               }
             }
@@ -205,6 +243,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Not authorized"
                 }
               }
             }
@@ -237,20 +279,55 @@
         ],
         "responses": {
           "200": {
-            "description": "Успішна відповідь",
+            "description": "Контакт знайдено",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Contact"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Contact found"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Contact"
+                    }
+                  }
                 }
               }
             }
           },
           "401": {
-            "description": "Неавторизований запит"
+            "description": "Неавторизований запит",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Not authorized"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Контакт не знайдено"
+            "description": "Контакт не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Contact not found"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -293,19 +370,61 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Contact"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Contact updated"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Contact"
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Некоректні дані"
+            "description": "Некоректні дані",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Validation failed"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Неавторизований запит"
+            "description": "Неавторизований запит",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Контакт не знайдено"
+            "description": "Контакт не знайдено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Contact not found"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -333,8 +452,29 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Контакт успішно видалено"
+          "200": {
+            "description": "Контакт успішно видалено",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Contact deleted successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {}
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Неавторизований запит",
@@ -342,6 +482,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Not authorized"
                 }
               }
             }
@@ -352,6 +496,10 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Contact not found"
                 }
               }
             }
@@ -387,7 +535,18 @@
             "description": "Користувача створено"
           },
           "400": {
-            "description": "Помилка валідації або такий email вже існує"
+            "description": "Помилка валідації або email вже існує",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Email already exists"
+                }
+              }
+            }
           }
         },
         "security": []
@@ -419,11 +578,24 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
-                      "type": "string"
+                    "status": {
+                      "type": "integer",
+                      "example": 200
                     },
-                    "user": {
-                      "$ref": "#/components/schemas/UserInfo"
+                    "message": {
+                      "type": "string",
+                      "example": "Login successful"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "$ref": "#/components/schemas/UserInfo"
+                        }
+                      }
                     }
                   }
                 }
@@ -431,7 +603,18 @@
             }
           },
           "401": {
-            "description": "Невірні дані для входу"
+            "description": "Невірні дані для входу",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Invalid credentials"
+                }
+              }
+            }
           }
         },
         "security": []
@@ -446,11 +629,39 @@
         "description": "Виходить з системи та анулює токен",
         "operationId": "logoutUser",
         "responses": {
-          "204": {
-            "description": "Успішний вихід (без тіла відповіді)"
+          "200": {
+            "description": "Вихід успішний",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Logout successful"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Неавторизований запит"
+            "description": "Неавторизований запит",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Not authorized"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -470,17 +681,51 @@
         "operationId": "getCurrentUser",
         "responses": {
           "200": {
-            "description": "Дані користувача",
+            "description": "Дані поточного користувача",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserInfo"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Current user loaded"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "user@example.com"
+                        },
+                        "subscription": {
+                          "type": "string",
+                          "example": "starter"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
           },
           "401": {
-            "description": "Неавторизований запит"
+            "description": "Неавторизований запит",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Not authorized"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -506,9 +751,9 @@
           "_id",
           "name",
           "email",
-          "phone",
-          "favorite",
-          "owner"
+          "phoneNumber",
+          "isFavourite",
+          "userId"
         ],
         "properties": {
           "_id": {
@@ -581,12 +826,6 @@
       },
       "NewContact": {
         "type": "object",
-        "required": [
-          "name",
-          "email",
-          "phoneNumber",
-          "contactType"
-        ],
         "properties": {
           "name": {
             "type": "string",

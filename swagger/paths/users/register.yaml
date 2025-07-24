@@ -13,5 +13,12 @@ responses:
   '201':
     description: Користувача створено
   '400':
-    description: Помилка валідації або такий email вже існує
+    description: Помилка валідації або email вже існує
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/ErrorResponse.yaml'
+        example:
+          status: error
+          message: Email already exists
 security: []

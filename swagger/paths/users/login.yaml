@@ -17,10 +17,27 @@ responses:
         schema:
           type: object
           properties:
-            token:
+            status:
+              type: integer
+              example: 200
+            message:
               type: string
-            user:
-              $ref: '../../components/schemas/UserInfo.yaml'
+              example: Login successful
+            data:
+              type: object
+              properties:
+                token:
+                  type: string
+                user:
+                  $ref: '../../components/schemas/UserInfo.yaml'
   '401':
     description: Невірні дані для входу
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/ErrorResponse.yaml'
+        example:
+          status: error
+          message: Invalid credentials
+
 security: []

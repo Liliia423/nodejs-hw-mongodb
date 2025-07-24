@@ -11,19 +11,47 @@ parameters:
       type: integer
       minimum: 1
     description: Номер сторінки (пагінація)
-  - name: limit
+
+  - name: perPage
     in: query
     required: false
     schema:
       type: integer
       minimum: 1
-    description: Кількість елементів на сторінці
-  - name: favorite
+    description: Кількість контактів на сторінці
+
+  - name: sortBy
+    in: query
+    required: false
+    schema:
+      type: string
+      example: name
+    description: Поле для сортування (наприклад name, email)
+
+  - name: sortOrder
+    in: query
+    required: false
+    schema:
+      type: string
+      enum: [asc, desc]
+      example: asc
+    description: Напрям сортування (asc або desc)
+
+  - name: type
+    in: query
+    required: false
+    schema:
+      type: string
+      example: personal
+    description: Тип контакту (наприклад personal, work)
+
+  - name: isFavourite
     in: query
     required: false
     schema:
       type: boolean
-    description: Фільтр за улюбленими
+    description: Фільтр за улюбленими контактами
+
 responses:
   '200':
     description: Список контактів з пагінацією
@@ -69,5 +97,8 @@ responses:
       application/json:
         schema:
           $ref: '../../components/schemas/ErrorResponse.yaml'
+        example:
+          status: error
+          message: Not authorized
 security:
   - bearerAuth: []

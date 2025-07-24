@@ -22,12 +22,39 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/Contact.yaml'
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Contact updated
+            data:
+              $ref: '../../../components/schemas/Contact.yaml'
   '400':
     description: Некоректні дані
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/ErrorResponse.yaml'
+        example:
+          status: error
+          message: Validation failed
   '401':
     description: Неавторизований запит
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/ErrorResponse.yaml'
   '404':
     description: Контакт не знайдено
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/ErrorResponse.yaml'
+        example:
+          status: error
+          message: Contact not found
 security:
   - bearerAuth: []

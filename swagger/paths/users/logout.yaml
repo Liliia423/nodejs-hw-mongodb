@@ -4,9 +4,27 @@ summary: Вихід користувача
 description: Виходить з системи та анулює токен
 operationId: logoutUser
 responses:
-  '204':
-    description: Успішний вихід (без тіла відповіді)
+  '200':
+    description: Вихід успішний
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: success
+            message:
+              type: string
+              example: Logout successful
   '401':
     description: Неавторизований запит
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/ErrorResponse.yaml'
+        example:
+          status: error
+          message: Not authorized
 security:
   - bearerAuth: []

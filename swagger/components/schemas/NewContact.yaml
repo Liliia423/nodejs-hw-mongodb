@@ -1,9 +1,9 @@
 type: object
-required:
-  - name
-  - email
-  - phoneNumber
-  - contactType
+# required:
+# - name
+# - email
+# - phoneNumber
+# - contactType
 properties:
   name:
     type: string
