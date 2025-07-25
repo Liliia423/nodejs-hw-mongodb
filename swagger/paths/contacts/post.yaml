@@ -8,7 +8,7 @@ requestBody:
   content:
     multipart/form-data:
       schema:
-        $ref: '../../components/schemas/NewContact.yaml'
+        $ref: '../../components/schemas/CreateContact.yaml'
 responses:
   '201':
     description: Контакт створено
